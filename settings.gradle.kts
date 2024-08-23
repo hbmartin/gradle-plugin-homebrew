@@ -1,3 +1,4 @@
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -25,7 +26,7 @@ develocity {
 	}
 }
 
-rootProject.name = "kotlin-gradle-plugin-template"
+rootProject.name = "gradle-plugin-homebrew"
 
 include(":example")
 includeBuild("plugin-build")

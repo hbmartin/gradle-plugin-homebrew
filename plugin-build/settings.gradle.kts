@@ -31,6 +31,6 @@ develocity {
 	}
 }
 
-rootProject.name = ("com.ncorti.kotlin.gradle.template")
+rootProject.name = ("me.haroldmartin.homebrew")
 
 include(":plugin")
