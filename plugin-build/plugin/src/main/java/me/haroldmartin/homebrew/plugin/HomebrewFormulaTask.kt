@@ -2,6 +2,8 @@ package me.haroldmartin.homebrew.plugin
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.provider.ListProperty
+import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
@@ -18,25 +20,49 @@ abstract class HomebrewFormulaTask : DefaultTask() {
     }
 
     @get:Input
-    @get:Option(option = "message", description = "A message to be printed in the output file")
-    abstract val message: Property<String>
+    @get:Option(option = "desc", description = "Description")
+    abstract val desc: Property<String>
 
     @get:Input
-    @get:Option(option = "tag", description = "A Tag to be used for debug and in the output file")
+    @get:Option(option = "homepage", description = "Homepage URL")
+    abstract val homepage: Property<String>
+
+    @get:Input
+    @get:Option(option = "license", description = "License, see https://spdx.org/licenses/")
     @get:Optional
-    abstract val tag: Property<String>
+    abstract val license: Property<String>
+
+    @get:Input
+    @get:Option(option = "jdk", description = "The JDK to depend on, default to openjdk")
+    abstract val jdk: Property<String>
+
+    @get:Input
+    @get:Option(option = "cliName", description = "Name to use for the installed CLI")
+    abstract val cliName: Property<String>
+
+    @get:Input
+    @get:Option(option = "dependsOn", description = "Optional list of formula dependencies")
+    @get:Optional
+    abstract val dependencies: ListProperty<String>
+
+    @get:Input
+    @get:Option(option = "tests", description = "Optional list of tests where the key is the flags to pass and the value is the expected output to match")
+    @get:Optional
+    abstract val tests: MapProperty<String, String>
 
     @get:OutputFile
     abstract val outputFile: RegularFileProperty
 
     @TaskAction
     fun sampleAction() {
-        val prettyTag = tag.orNull?.let { "[$it]" } ?: ""
-
-        logger.lifecycle("$prettyTag message is: ${message.orNull}")
-        logger.lifecycle("$prettyTag tag is: ${tag.orNull}")
-        logger.lifecycle("$prettyTag outputFile is: ${outputFile.orNull}")
-
-        outputFile.get().asFile.writeText("$prettyTag ${message.get()}")
+        outputFile.get().asFile.writeText(FormulaTemplate.generateFormula(
+            desc = desc.get(),
+            homepage = homepage.get(),
+            license = license.getOrNull(),
+            jdk = jdk.get(),
+            cliName = cliName.get(),
+            dependsOn = dependencies.get(),
+            tests = tests.get(),
+        ))
     }
 }
