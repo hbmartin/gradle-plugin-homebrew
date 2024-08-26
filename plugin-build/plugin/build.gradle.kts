@@ -11,6 +11,7 @@ dependencies {
     implementation(gradleApi())
 
     testImplementation(libs.junit)
+    detektPlugins("me.haroldmartin:hbmartin-detekt-rules:0.1.6")
 }
 
 java {
@@ -32,7 +33,7 @@ gradlePlugin {
             version = property("VERSION").toString()
             description = property("DESCRIPTION").toString()
             displayName = property("DISPLAY_NAME").toString()
-            tags.set(listOf("plugin", "gradle", "sample", "template"))
+            tags.set(listOf("plugin", "gradle", "brew", "homebrew", "formula"))
         }
     }
 }

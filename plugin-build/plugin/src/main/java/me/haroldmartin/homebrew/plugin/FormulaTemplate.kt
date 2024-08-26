@@ -1,5 +1,7 @@
 package me.haroldmartin.homebrew.plugin
 
+import java.util.Locale
+
 object FormulaTemplate {
     @Suppress("LongParameterList")
     fun generateFormula(
@@ -31,7 +33,11 @@ object FormulaTemplate {
               end
 
               test do
-              ${tests.map { (key, value) -> "    assert_match \"${value}\", shell_output(\"#{bin}/${cliName} ${key}\")" }.joinToString("\n")}
+              ${
+            tests.map { (key, value) ->
+                "  assert_match \"${value}\", shell_output(\"#{bin}/$cliName ${key}\")"
+            }.joinToString("\n")
+        }
               end
             end
         """.trimIndent()
@@ -39,5 +45,9 @@ object FormulaTemplate {
     private fun kebabToCamelCase(input: String): String =
         input
             .split("-")
-            .joinToString("") { it.capitalize() }
+            .joinToString("") { str ->
+                str.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                }
+            }
 }

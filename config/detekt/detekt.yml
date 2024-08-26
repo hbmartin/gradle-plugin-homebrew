@@ -302,19 +302,9 @@ exceptions:
 
 naming:
   active: true
-  BooleanPropertyNaming:
-    active: true
-    allowedPattern: '^(is|has|are)'
-    ignoreOverridden: true
   ClassNaming:
     active: true
     classPattern: '[A-Z][a-zA-Z0-9]*'
-  ConstructorParameterNaming:
-    active: true
-    parameterPattern: '[a-z][A-Za-z0-9]*'
-    privateParameterPattern: '[a-z][A-Za-z0-9]*'
-    excludeClassPattern: '$^'
-    ignoreOverridden: true
   EnumNaming:
     active: true
     enumEntryPattern: '[A-Z][_a-zA-Z0-9]*'
@@ -328,17 +318,6 @@ naming:
   FunctionMinLength:
     active: true
     minimumFunctionNameLength: 3
-  FunctionNaming:
-    active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-    functionPattern: '[a-z][a-zA-Z0-9]*'
-    excludeClassPattern: '$^'
-    ignoreOverridden: true
-  FunctionParameterNaming:
-    active: true
-    parameterPattern: '[a-z][A-Za-z0-9]*'
-    excludeClassPattern: '$^'
-    ignoreOverridden: true
   InvalidPackageDeclaration:
     active: true
     rootPackage: ''
@@ -375,12 +354,6 @@ naming:
   VariableMinLength:
     active: true
     minimumVariableNameLength: 1
-  VariableNaming:
-    active: true
-    variablePattern: '[a-z][A-Za-z0-9]*'
-    privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
-    excludeClassPattern: '$^'
-    ignoreOverridden: true
 
 performance:
   active: true
@@ -528,15 +501,7 @@ style:
     active: true
   ExpressionBodySyntax:
     active: true
-    includeLineWrapping: false
-  ForbiddenComment:
-    active: true
-    values:
-      - 'FIXME:'
-      - 'STOPSHIP:'
-      - 'TODO:'
-    allowedPatterns: ''
-    customMessage: ''
+    includeLineWrapping: true
   ForbiddenImport:
     active: true
     imports: []
@@ -581,8 +546,6 @@ style:
     ignoreEnums: false
     ignoreRanges: false
     ignoreExtensionFunctions: true
-  MandatoryBracesIfStatements:
-    active: true
   MandatoryBracesLoops:
     active: true
   MaxChainedCallsOnSameLine:
@@ -604,6 +567,7 @@ style:
   MultilineRawStringIndentation:
     active: true
     indentSize: 4
+    excludes: ['**/FormulaTemplate.kt']
   NestedClassesVisibility:
     active: true
   NewLineAtEndOfFile:
@@ -617,8 +581,6 @@ style:
   OptionalAbstractKeyword:
     active: true
   OptionalUnit:
-    active: true
-  OptionalWhenBraces:
     active: true
   PreferToOverPairSyntax:
     active: true
@@ -722,3 +684,32 @@ style:
     active: true
     excludeImports:
       - 'java.util.*'
+
+HbmartinRuleSet:
+  AvoidFirstOrLastOnList:
+    active: true
+  AvoidMutableCollections:
+    active: true
+    excludes: ['**/HomebrewFormulaTask.kt', '**/HomebrewFormulaPlugin.kt']
+  AvoidVarsExceptWithDelegate:
+    active: true
+    allowedDelegates:
+      - 'remember\w*'
+      - 'mutableState\w*'
+  DontForceCast:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+  MutableTypeShouldBePrivate:
+    active: true
+  NoCallbacksInFunctions:
+    active: true
+    ignoreAnnotated: ['Composable']
+    allowExtensions: true
+    allowReceivers: true
+    allowInline: false
+  NoNotNullOperator:
+    active: true
+  NoVarsInConstructor:
+    active: true
+  WhenBranchSingleLineOrBraces:
+    active: true

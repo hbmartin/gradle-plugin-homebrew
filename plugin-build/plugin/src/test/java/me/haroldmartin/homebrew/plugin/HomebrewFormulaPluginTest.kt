@@ -12,7 +12,7 @@ class HomebrewFormulaPluginTest {
         val project = ProjectBuilder.builder().build()
         project.pluginManager.apply("me.haroldmartin.homebrew.plugin")
 
-        assert(project.tasks.getByName("templateExample") is HomebrewFormulaTask)
+        assert(project.tasks.getByName("generateHomebrewFormula") is HomebrewFormulaTask)
     }
 
     @Test
@@ -20,7 +20,7 @@ class HomebrewFormulaPluginTest {
         val project = ProjectBuilder.builder().build()
         project.pluginManager.apply("me.haroldmartin.homebrew.plugin")
 
-        assertNotNull(project.extensions.getByName("templateExampleConfig"))
+        assertNotNull(project.extensions.getByName("homebrew"))
     }
 
     @Test
@@ -28,16 +28,16 @@ class HomebrewFormulaPluginTest {
         val project = ProjectBuilder.builder().build()
         project.pluginManager.apply("me.haroldmartin.homebrew.plugin")
         val aFile = File(project.projectDir, ".tmp")
-        (project.extensions.getByName("templateExampleConfig") as HomebrewFormulaExtension).apply {
-            tag.set("a-sample-tag")
-            message.set("just-a-message")
+        (project.extensions.getByName("homebrew") as HomebrewFormulaExtension).apply {
+            homepage.set("a-sample-tag")
+            desc.set("just-a-message")
             outputFile.set(aFile)
         }
 
-        val task = project.tasks.getByName("templateExample") as HomebrewFormulaTask
+        val task = project.tasks.getByName("generateHomebrewFormula") as HomebrewFormulaTask
 
-        assertEquals("a-sample-tag", task.tag.get())
-        assertEquals("just-a-message", task.message.get())
+        assertEquals("a-sample-tag", task.homepage.get())
+        assertEquals("just-a-message", task.desc.get())
         assertEquals(aFile, task.outputFile.get().asFile)
     }
 }

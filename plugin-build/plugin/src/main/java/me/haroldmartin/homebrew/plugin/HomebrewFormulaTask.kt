@@ -46,7 +46,9 @@ abstract class HomebrewFormulaTask : DefaultTask() {
     @get:Input
     @get:Option(
         option = "tests",
-        description = "Optional list of tests where the key is the flags to pass and the value is the expected output to match",
+        description =
+            "Optional list of tests where the key is the flags to pass and " +
+                "the value is the expected output to match",
     )
     @get:Optional
     abstract val tests: MapProperty<String, String>
