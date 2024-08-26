@@ -1,8 +1,9 @@
 # gradle-plugin-homebrew 🐘🍻
 
+[![Gradle Plugin Portal](https://img.shields.io/gradle-plugin-portal/v/me.haroldmartin.homebrew.plugin)](https://plugins.gradle.org/plugin/me.haroldmartin.homebrew.plugin)
 [![Pre Merge Checks](https://github.com/hbmartin/gradle-plugin-homebrew/workflows/Pre%20Merge%20Checks/badge.svg)](https://github.com/hbmartin/gradle-plugin-homebrew/actions?query=workflow%3A%22Pre+Merge+Checks%22)
-[![License](https://img.shields.io/github/license/hbmartin/kotlin-android-template.svg)](LICENSE)
-![Language](https://img.shields.io/github/languages/top/hbmartin/kotlin-android-template?color=blue&logo=kotlin)
+[![License](https://img.shields.io/github/license/hbmartin/gradle-plugin-homebrew.svg)](LICENSE)
+![Language](https://img.shields.io/github/languages/top/hbmartin/gradle-plugin-homebrew?color=blue&logo=kotlin)
 
 This is a Gradle plugin to automate the creation of a Homebrew formula for your published JARs as CLIs. It hooks into your publishing task requiring minimal configuration on your part.
 
