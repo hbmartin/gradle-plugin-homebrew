@@ -31,6 +31,6 @@ develocity {
 	}
 }
 
-rootProject.name = ("me.haroldmartin.homebrew")
+rootProject.name = "me.haroldmartin.homebrew.plugin"
 
 include(":plugin")

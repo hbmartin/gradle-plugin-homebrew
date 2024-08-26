@@ -7,7 +7,7 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/plugin-build" name="me.haroldmartin.homebrew">
+              <build path="$PROJECT_DIR$/plugin-build" name="me.haroldmartin.homebrew.plugin">
                 <projects>
                   <project path="$PROJECT_DIR$/plugin-build" />
                   <project path="$PROJECT_DIR$/plugin-build/plugin" />
