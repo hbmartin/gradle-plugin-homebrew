@@ -16,7 +16,7 @@ class HomebrewFormulaPluginTest {
     }
 
     @Test
-    fun `extension templateExampleConfig is created correctly`() {
+    fun `extension is created correctly`() {
         val project = ProjectBuilder.builder().build()
         project.pluginManager.apply("me.haroldmartin.homebrew.plugin")
 
