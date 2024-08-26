@@ -33,7 +33,7 @@ gradlePlugin {
             version = property("VERSION").toString()
             description = property("DESCRIPTION").toString()
             displayName = property("DISPLAY_NAME").toString()
-            tags.set(listOf("plugin", "gradle", "brew", "homebrew", "formula"))
+            tags.set(listOf("tap", "cli", "brew", "homebrew", "formula"))
         }
     }
 }
