@@ -13,10 +13,8 @@ import org.gradle.api.tasks.options.Option
 
 abstract class HomebrewFormulaTask : DefaultTask() {
     init {
-        description = "Just a sample template task"
-
-        // Don't forget to set the group here.
-        // group = BasePlugin.BUILD_GROUP
+        description = "A Gradle plugin to generate homebrew formula for running a jar"
+        group = "me.haroldmartin"
     }
 
     @get:Input
@@ -46,23 +44,40 @@ abstract class HomebrewFormulaTask : DefaultTask() {
     abstract val dependencies: ListProperty<String>
 
     @get:Input
-    @get:Option(option = "tests", description = "Optional list of tests where the key is the flags to pass and the value is the expected output to match")
+    @get:Option(
+        option = "tests",
+        description = "Optional list of tests where the key is the flags to pass and the value is the expected output to match",
+    )
     @get:Optional
     abstract val tests: MapProperty<String, String>
 
     @get:OutputFile
     abstract val outputFile: RegularFileProperty
 
+    @get:Input
+    abstract val jarName: Property<String>
+
+    @get:Input
+    abstract val jarUrl: Property<String>
+
+    @get:Input
+    abstract val sha256: Property<String>
+
     @TaskAction
-    fun sampleAction() {
-        outputFile.get().asFile.writeText(FormulaTemplate.generateFormula(
-            desc = desc.get(),
-            homepage = homepage.get(),
-            license = license.getOrNull(),
-            jdk = jdk.get(),
-            cliName = cliName.get(),
-            dependsOn = dependencies.get(),
-            tests = tests.get(),
-        ))
+    fun generateHomebrewFormula() {
+        outputFile.get().asFile.writeText(
+            FormulaTemplate.generateFormula(
+                jarName = jarName.get(),
+                jarUrl = jarUrl.get(),
+                sha256 = sha256.get(),
+                desc = desc.get(),
+                homepage = homepage.get(),
+                license = license.getOrNull(),
+                jdk = jdk.get(),
+                cliName = cliName.get(),
+                dependsOn = dependencies.get(),
+                tests = tests.get(),
+            ),
+        )
     }
 }

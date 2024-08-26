@@ -19,15 +19,15 @@ abstract class HomebrewFormulaExtension
         val jdk: Property<String> = objects.property(String::class.java).convention("openjdk")
         val cliName: Property<String> = objects.property(String::class.java)
         val dependencies: ListProperty<String> = objects.listProperty(String::class.java)
-        val tests: MapProperty<String, String> = objects
-            .mapProperty(String::class.java, String::class.java)
-            .convention(emptyMap())
+        val tests: MapProperty<String, String> =
+            objects
+                .mapProperty(String::class.java, String::class.java)
+                .convention(emptyMap())
 
-        // Example of a property with a default set with .convention
         val outputFile: RegularFileProperty =
             objects.fileProperty().convention(
                 project.layout.buildDirectory.dir("Formula").map {
-                    it.file(project.name + ".rb")
+                    it.file(cliName.get() + ".rb")
                 },
             )
     }
