@@ -67,19 +67,23 @@ abstract class HomebrewFormulaTask : DefaultTask() {
 
     @TaskAction
     fun generateHomebrewFormula() {
-        outputFile.get().asFile.writeText(
-            FormulaTemplate.generateFormula(
-                jarName = jarName.get(),
-                jarUrl = jarUrl.get(),
-                sha256 = sha256.get(),
-                desc = desc.get(),
-                homepage = homepage.get(),
-                license = license.getOrNull(),
-                jdk = jdk.get(),
-                cliName = cliName.get(),
-                dependsOn = dependencies.get(),
-                tests = tests.get(),
-            ),
-        )
+        outputFile
+            .get()
+            .asFile
+            .also { it.parentFile.mkdirs() }
+            .writeText(
+                FormulaTemplate.generateFormula(
+                    jarName = jarName.get(),
+                    jarUrl = jarUrl.get(),
+                    sha256 = sha256.get(),
+                    desc = desc.get(),
+                    homepage = homepage.get(),
+                    license = license.getOrNull(),
+                    jdk = jdk.get(),
+                    cliName = cliName.get(),
+                    dependsOn = dependencies.get(),
+                    tests = tests.get(),
+                ),
+            )
     }
 }
