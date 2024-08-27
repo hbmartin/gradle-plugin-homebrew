@@ -43,6 +43,15 @@ gradlePlugin {
     vcsUrl.set(property("VCS_URL").toString())
 }
 
+// Use Detekt type resolution for check
+tasks.named("check").configure {
+    this.setDependsOn(
+        this.dependsOn.filterNot {
+            it is TaskProvider<*> && it.name == "detekt"
+        } + tasks.named("detektMain"),
+    )
+}
+
 tasks.create("setupPluginUploadFromEnvironment") {
     doLast {
         val key = System.getenv("GRADLE_PUBLISH_KEY")

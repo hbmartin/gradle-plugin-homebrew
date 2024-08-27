@@ -18,7 +18,7 @@ In the project where your CLI JAR is published, add the following:
 
 ```toml
 [versions]
-homebrew = "0.1.0"
+homebrew = "0.2.0"
 [plugins]
 homebrew = { id = "me.haroldmartin.homebrew.plugin", version.ref = "homebrew" }
 ```
@@ -35,7 +35,7 @@ plugins {
 ```kotlin
 plugins {
     ...
-    id("me.haroldmartin.homebrew.plugin") version "0.1.0"
+    id("me.haroldmartin.homebrew.plugin") version "0.2.0"
 }
 ```
 

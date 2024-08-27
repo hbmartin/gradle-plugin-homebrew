@@ -2,11 +2,16 @@ package me.haroldmartin.homebrew.plugin
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.api.logging.Logging
+import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
+import java.net.URI
 import java.security.MessageDigest
 
 const val EXTENSION_NAME = "homebrew"
 const val TASK_NAME = "generateHomebrewFormula"
+private const val MAVEN_CENTRAL_URL = "https://repo1.maven.org/maven2/"
 
 @Suppress("UnnecessaryAbstractClass")
 abstract class HomebrewFormulaPlugin : Plugin<Project> {
@@ -48,10 +53,11 @@ abstract class HomebrewFormulaPlugin : Plugin<Project> {
                     "${publishTask.publication.artifactId}-${publishTask.publication.version}.jar"
 
                 val jarUrl =
-                    "${publishTask.repository.url}" +
-                        "${publishTask.publication.groupId.replace('.', '/')}/" +
-                        "${publishTask.publication.artifactId}/${publishTask.publication.version}/" +
-                        jarName
+                    synthesizeJarUrl(
+                        repository = publishTask.repository,
+                        publication = publishTask.publication,
+                        jarName = jarName,
+                    )
 
                 brewTask.get().let { brew ->
                     brew.jarName.set(jarName)
@@ -62,4 +68,22 @@ abstract class HomebrewFormulaPlugin : Plugin<Project> {
             }
         }
     }
+
+    private fun synthesizeJarUrl(
+        repository: MavenArtifactRepository,
+        publication: MavenPublication,
+        jarName: String,
+    ) = repoUrlOrCentralUrl(repository.url) +
+        "${publication.groupId.replace('.', '/')}/" +
+        "${publication.artifactId}/${publication.version}/" +
+        jarName
+
+    private fun repoUrlOrCentralUrl(repoUrl: URI): String =
+        repoUrl.toString().takeIf {
+            !it.startsWith("file")
+        } ?: MAVEN_CENTRAL_URL.also {
+            Logging
+                .getLogger(HomebrewFormulaPlugin::class.java)
+                .warn("Got a file URL, using Maven Central URL instead ($MAVEN_CENTRAL_URL)")
+        }
 }
