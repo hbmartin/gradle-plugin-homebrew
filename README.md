@@ -64,8 +64,32 @@ homebrew {
 }
 ```
 
-### Publishing
+### Publishing and Generating
 Now run your publishing task e.g. `./gradlew :cli:publishToMavenCentral` and the Homebrew formula will be generated in the specified output file with the Maven URL populated.
+
+### Pushing to Homebrew Tap
+
+To push your formula to a Homebrew tap repo from a GitHub action, you can use the following.
+
+Note that you must create a PAT with content access permissions for your tap repo and add it as a secret to your project's GitHub repo.
+
+```yaml
+      - name: Checkout homebrew repo
+        uses: actions/checkout@v4
+        with:
+            repository: <username>/<homebrew-tap-repo>
+            token: ${{ secrets.PAT_HOMEBREW }}
+            path: <homebrew-tap-repo>
+      - name: Commit and push to homebrew repo
+        run: |
+            cd <homebrew-tap-repo>
+            cp ../<path-to-project-repo>/build/Formula/<cliName>.rb Formula/<cliName>.rb
+            git config user.name <username>
+            git config user.email <your-email>
+            git add Formula/<cliName>.rb
+            git commit -m "Update homebrew-<cliName> to ${{ github.event.release.tag_name }}"
+            git push origin head
+```
 
 ## Limitations
 
