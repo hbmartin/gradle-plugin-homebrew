@@ -84,6 +84,6 @@ abstract class HomebrewFormulaPlugin : Plugin<Project> {
         } ?: MAVEN_CENTRAL_URL.also {
             Logging
                 .getLogger(HomebrewFormulaPlugin::class.java)
-                .warn("Got a file URL, using Maven Central URL instead ($MAVEN_CENTRAL_URL)")
+                .warn("Homebrew received a file URL ($repoUrl)\nUsing Maven Central URL instead ($MAVEN_CENTRAL_URL)")
         }
 }
